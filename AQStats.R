@@ -1,7 +1,7 @@
 # Get estimates of the PM10 and PM2.5 ratios using the fractions of TSP: 0.47 and 0.072 
 pm10 <- test_data$TSP * 0.47
 pm25 <- test_data$TSP * 0.072
-testt_data$pm10 <- pm10
+test_data$pm10 <- pm10
 test_data$pm25 <- pm25
 
 
