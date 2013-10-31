@@ -7,7 +7,7 @@ test_data$pm25 <- pm25
 
 
 # Function for hourly percentiles
-hourly.pm.stats <- function(data, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
+hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
   
@@ -27,7 +27,7 @@ hourly.pm.stats <- function(data, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   
   
   # Subset data
-  data_year <- data[which(data$Year == year), ]
+  data_year <- df[which(df$Year == year), ]
   
   # Determine how large to make the empty data frame
   number_of_percentiles <- length(percentiles)
@@ -68,7 +68,7 @@ hourly.pm.stats(data = revised_dust_data,
 
 
 # Function for sequential, daily percentiles
-daily.seq.pm.stats <- function(data, tsp = NULL, pm10 = NULL, pm25 = NULL,
+daily.seq.pm.stats <- function(df, tsp = NULL, pm10 = NULL, pm25 = NULL,
                                estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                                year, percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
   #data <- dust_data_2010_2012
@@ -79,7 +79,7 @@ daily.seq.pm.stats <- function(data, tsp = NULL, pm10 = NULL, pm25 = NULL,
   #percentiles <- c(100, 99, 98, 95, 90, 75, 50)  #numeric vector
   
   # Subset data
-  data_daily_year <- data[which(data$year== year), ]
+  data_daily_year <- df[which(df$year== year), ]
   
   # Determine how large to make the empty data frame
   number_of_percentiles <- length(percentiles)
