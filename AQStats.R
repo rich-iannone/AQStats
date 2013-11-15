@@ -17,29 +17,6 @@ pm25 <- test_data$TSP * 0.072
 test_data$pm10 <- pm10
 test_data$pm25 <- pm25
 
-
-# Test if data has a PM/TSP column
-PM.col <- ifelse(!is.na(pmatch("PM", colnames(df))), pmatch("PM", colnames(df)), 0)
-TSP.col <- ifelse(!is.na(pmatch("TSP", colnames(df))), pmatch("TSP", colnames(df)), 0)
-pm.col <- ifelse(!is.na(pmatch("pm", colnames(df))), pmatch("pm", colnames(df)), 0)
-tsp.col <- ifelse(!is.na(pmatch("tsp", colnames(df))), pmatch("tsp", colnames(df)), 0)
-PM.cols <- c(PM.col, TSP.col, pm.col, tsp.col)
-
-# Test if data has a PM10 column
-PM10.col <- ifelse(!is.na(pmatch("PM10", colnames(df))), pmatch("PM10", colnames(df)), 0)
-pm10.col <- ifelse(!is.na(pmatch("pm10", colnames(df))), pmatch("pm10", colnames(df)), 0)
-PM10.cols <- c(PM10.col, pm10.col) 
-
-# Test if data has a PM25 column
-PM25.col <- ifelse(!is.na(pmatch("PM25", colnames(df))), pmatch("PM25", colnames(df)), 0)
-pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), pmatch("pm25", colnames(df)), 0)
-PM25.cols <- c(PM25.col, pm25.col)
-
-
-
-
-
-
 # Function for hourly percentiles for particulate matter
 hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
@@ -80,7 +57,6 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), pmatch("pm25", colnames(df)), 0)
   PM25.cols <- c(PM25.col, pm25.col)
   any.PM25.col <- sum(PM25.cols) > 0
-  
   
   # Validate data input
   #
