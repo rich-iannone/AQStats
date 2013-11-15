@@ -99,25 +99,25 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   
   # Construct the data frame, provide column names
   hourly_percentiles <- as.data.frame(matrix(nrow = (number_of_percentiles), ncol = 6))
-  colnames(hourly_percentiles) <- c("year", "pm", "pm10", "pm25", "percentile", "type")
+  colnames(hourly_percentiles) <- c("year", "percentile", "type", "pm", "pm10", "pm25")
   
   # Generate vectors of percentiles for each of tsp, pm10, and pm25
   if (any.PM.col == TRUE) {
-  pm_percentiles <- quantile(as.numeric(data_year[,max(PM.cols)]),
+  pm_percentiles <- quantile(as.numeric(as.character(data_year[,max(PM.cols)])),
                              probs = percentiles/100, na.rm = TRUE)
   } else {
   pm_percentiles <- rep(NA, times = length(percentiles))
   }
   
   if (any.PM10.col == TRUE) {
-  pm10_percentiles <- quantile(as.numeric(data_year[,max(PM10.cols)]),
+  pm10_percentiles <- quantile(as.numeric(as.character(data_year[,max(PM10.cols)])),
                                probs = percentiles/100, na.rm = TRUE)
   } else {
     pm10_percentiles <- rep(NA, times = length(percentiles))
   }
   
   if (any.PM25.col == TRUE) {
-  pm25_percentiles <- quantile(as.numeric(data_year[,max(PM25.cols)]),
+  pm25_percentiles <- quantile(as.numeric(as.character(data_year[,max(PM25.cols)])),
                                probs = percentiles/100, na.rm = TRUE)
   } else {
     pm25_percentiles <- rep(NA, times = length(percentiles))
@@ -125,11 +125,11 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   
   # Place data into data frame
   hourly_percentiles$year <- year
-  hourly_percentiles$pm <- pm_percentiles
-  hourly_percentiles$pm10 <- pm10_percentiles
-  hourly_percentiles$pm25 <- pm25_percentiles
   hourly_percentiles$percentile <- percentiles
   hourly_percentiles$type <- "hourly"
+  hourly_percentiles$pm <- round(pm_percentiles, digits = 2)
+  hourly_percentiles$pm10 <- round(pm10_percentiles, digits = 2)
+  hourly_percentiles$pm25 <- round(pm25_percentiles, digits = 2)
   
   # Print the hourly stats data frame
   print(hourly_percentiles)
