@@ -1,3 +1,16 @@
+# Load in test data from the BC Air Quality Network
+require(lubridate)
+df <- read.csv("Abbotsford A Columbia Street-2011-2012-MON.csv", header = TRUE)
+df$Date.Time <- parse_date_time(as.character(df$Date.Time), "%m%d%y %H%M")
+df$Date.Time <- as.POSIXct(df$Date.Time, tz = "America/Vancouver")
+
+
+
+# Rename rows to contain units
+for (i in 2:(ncol(df))) {
+  colnames(df)[i] <- paste(colnames(df)[i],".",gsub(" ","",as.character(df[1,i])), sep = "")
+}
+
 # Get estimates of the PM10 and PM2.5 ratios using the fractions of TSP: 0.47 and 0.072 
 pm10 <- test_data$TSP * 0.47
 pm25 <- test_data$TSP * 0.072
@@ -5,8 +18,27 @@ test_data$pm10 <- pm10
 test_data$pm25 <- pm25
 
 
+# Test if data has a PM/TSP column
+PM.col <- ifelse(!is.na(pmatch("PM", colnames(df))), TRUE, FALSE)
+TSP.col <- ifelse(!is.na(pmatch("TSP", colnames(df))), TRUE, FALSE)
+pm.col <- ifelse(!is.na(pmatch("pm", colnames(df))), TRUE, FALSE)
+tsp.col <- ifelse(!is.na(pmatch("tsp", colnames(df))), TRUE, FALSE)
 
-# Function for hourly percentiles
+# Test if data has a PM10 column
+PM10.col <- ifelse(!is.na(pmatch("PM10", colnames(df))), TRUE, FALSE)
+pm10.col <- ifelse(!is.na(pmatch("pm10", colnames(df))), TRUE, FALSE)
+
+# Test if data has a PM25 column
+PM25.col <- ifelse(!is.na(pmatch("PM25", colnames(df))), TRUE, FALSE)
+pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), TRUE, FALSE)
+
+
+
+
+
+
+
+# Function for hourly percentiles for particulate matter
 hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
@@ -29,8 +61,14 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   # if(tsp == NULL & pm10 == NULL & pm25 == NULL,
   #       break("At least one PM parameter must be identified in the data frame"), NULL)
   
+  # Detect if there is a year column; if there isn't, look for a column of class "POSIXct"
+  posix_time <- mat.or.vec(ncol(df),1)
+  for (i in 1:(ncol(df))) {
+    posix_time[i] <- ifelse(class((df)[,i])[1] == "POSIXct", 1, NA)
+  }
+  posix_col <- match(1, posix_time)
   
-  # Subset data
+  
   data_year <- df[which(df$Year == year), ]
   
   # Determine how large to make the empty data frame
