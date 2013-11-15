@@ -96,7 +96,7 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   # if(tsp == NULL & pm10 == NULL & pm25 == NULL,
   #       break("At least one PM parameter must be identified in the data frame"), NULL)
   
-  # Detect if there is a year column; if there isn't, look for a column of class "POSIXct"
+  # Detect if there is a column of class "POSIXct"
   posix_time <- mat.or.vec(ncol(df),1)
   for (i in 1:(ncol(df))) {
     posix_time[i] <- ifelse(class((df)[,i])[1] == "POSIXct", 1, NA)
@@ -104,25 +104,53 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   posix_col <- match(1, posix_time)
   
  
-  data_year <- df[which(year(df[,posix_col]) == year), ]
+  # Detect if there is a column that contains year data
+  year_col <- mat.or.vec(ncol(df),1)
+  for (i in 1:(ncol(df))) {
+    year_col[i] <- ifelse(mean(as.numeric(df[,3]), na.rm = TRUE) < (year(Sys.time()) + 1) &
+                          mean(as.numeric(df[,3]), na.rm = TRUE) > 1950, 1, NA)
+  }
+  year_col <- match(1, year_col)
   
-  data_year <- df[which(df$Year == year), ]
-  
+  if (!is.na(posix_col)) {
+      # Create subset of data frame based on POSIX formatted objects and year selected 
+    data_year <- df[which(year(df[,posix_col]) == year), ]
+  } else if (!is.na(year_col)) {
+    data_year <- df[which(year(df[,year_col]) == year), ]
+  } else { break("Year information cannot be found in data frame") }
+    
   # Determine how large to make the empty data frame
   number_of_percentiles <- length(percentiles)
   
   # Construct the data frame, provide column names
   hourly_percentiles <- as.data.frame(matrix(nrow = (number_of_percentiles), ncol = 6))
-  colnames(hourly_percentiles) <- c("year", "tsp", "pm10", "pm25", "percentile", "type")
+  colnames(hourly_percentiles) <- c("year", "pm", "pm10", "pm25", "percentile", "type")
   
   # Generate vectors of percentiles for each of tsp, pm10, and pm25
-  tsp_percentiles <- quantile(data_year$TSP, probs = percentiles/100, na.rm = TRUE)
-  pm10_percentiles <- quantile(data_year$pm10, probs = percentiles/100, na.rm = TRUE)
-  pm25_percentiles <- quantile(data_year$pm25, probs = percentiles/100, na.rm = TRUE)
+  if (any.PM.col == TRUE) {
+  pm_percentiles <- quantile(as.numeric(data_year[,max(PM.cols)]),
+                             probs = percentiles/100, na.rm = TRUE)
+  } else {
+  pm_percentiles <- rep(NA, times = length(percentiles))
+  }
+  
+  if (any.PM10.col == TRUE) {
+  pm10_percentiles <- quantile(as.numeric(data_year[,max(PM10.cols)]),
+                               probs = percentiles/100, na.rm = TRUE)
+  } else {
+    pm10_percentiles <- rep(NA, times = length(percentiles))
+  }
+  
+  if (any.PM25.col == TRUE) {
+  pm25_percentiles <- quantile(as.numeric(data_year[,max(PM25.cols)]),
+                               probs = percentiles/100, na.rm = TRUE)
+  } else {
+    pm25_percentiles <- rep(NA, times = length(percentiles))
+  }
   
   # Place data into data frame
   hourly_percentiles$year <- year
-  hourly_percentiles$tsp <- tsp_percentiles
+  hourly_percentiles$pm <- pm_percentiles
   hourly_percentiles$pm10 <- pm10_percentiles
   hourly_percentiles$pm25 <- pm25_percentiles
   hourly_percentiles$percentile <- percentiles
