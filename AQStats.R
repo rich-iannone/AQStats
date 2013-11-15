@@ -42,10 +42,14 @@ pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), TRUE, FALSE)
 hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
+  
+  year <- 2011
+  df <- df
   # If data frame is a vector, make it a data frame
   if (is.vector(df)) {
     df <- data.frame(x = df)
   }
+
   
   # Validate data input
   #
