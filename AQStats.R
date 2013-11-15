@@ -72,6 +72,8 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   }
   posix_col <- match(1, posix_time)
   
+ 
+  data_year <- df[which(year(df[,posix_col]) == year), ]
   
   data_year <- df[which(df$Year == year), ]
   
