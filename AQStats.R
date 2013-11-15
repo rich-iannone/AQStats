@@ -79,7 +79,6 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   }
   posix_col <- match(1, posix_time)
   
- 
   # Detect if there is a column that contains year data
   year_col <- mat.or.vec(ncol(df),1)
   for (i in 1:(ncol(df))) {
