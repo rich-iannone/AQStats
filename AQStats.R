@@ -22,7 +22,7 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
   
-  year <- 2011
+  year <- 2012
   df <- df
   
   tsp = NULL
