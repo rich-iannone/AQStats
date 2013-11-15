@@ -47,11 +47,40 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   
   year <- 2011
   df <- df
+  
+  tsp = NULL
+  pm10 = "PM10.ug/m3"
+  pm25 = "PM25.ug/m3"
+  
+  ratios = c(0.47, 0.072)
+  percentiles = c(100, 99, 98, 95, 90, 75, 50)
+  
+  
   # If data frame is a vector, make it a data frame
   if (is.vector(df)) {
     df <- data.frame(x = df)
   }
 
+  # Test if data has a PM/TSP column
+  PM.col <- ifelse(!is.na(pmatch("PM", colnames(df))), pmatch("PM", colnames(df)), 0)
+  TSP.col <- ifelse(!is.na(pmatch("TSP", colnames(df))), pmatch("TSP", colnames(df)), 0)
+  pm.col <- ifelse(!is.na(pmatch("pm", colnames(df))), pmatch("pm", colnames(df)), 0)
+  tsp.col <- ifelse(!is.na(pmatch("tsp", colnames(df))), pmatch("tsp", colnames(df)), 0)
+  PM.cols <- c(PM.col, TSP.col, pm.col, tsp.col)
+  any.PM.col <- sum(PM.cols) > 0
+  
+  # Test if data has a PM10 column
+  PM10.col <- ifelse(!is.na(pmatch("PM10", colnames(df))), pmatch("PM10", colnames(df)), 0)
+  pm10.col <- ifelse(!is.na(pmatch("pm10", colnames(df))), pmatch("pm10", colnames(df)), 0)
+  PM10.cols <- c(PM10.col, pm10.col)
+  any.PM10.col <- sum(PM10.cols) > 0
+  
+  # Test if data has a PM25 column
+  PM25.col <- ifelse(!is.na(pmatch("PM25", colnames(df))), pmatch("PM25", colnames(df)), 0)
+  pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), pmatch("pm25", colnames(df)), 0)
+  PM25.cols <- c(PM25.col, pm25.col)
+  any.PM25.col <- sum(PM25.cols) > 0
+  
   
   # Validate data input
   #
