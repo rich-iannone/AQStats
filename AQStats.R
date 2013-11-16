@@ -189,14 +189,4 @@ daily.seq.pm.stats <- function(df, tsp = NULL, pm10 = NULL, pm25 = NULL,
   rm(pm10, pm25, tsp)
 }
 
-daily.seq.pm.stats(data = revised_dust_data,
-                   tsp = "dust", pm10 = "pm10", pm25 = "pm25", year = 2010)
-
-daily.seq.pm.stats(data = revised_dust_data,
-                   tsp = "dust", pm10 = "pm10", pm25 = "pm25", year = 2011)
-
-daily.seq.pm.stats(data = revised_dust_data,
-                   tsp = "dust", pm10 = "pm10", pm25 = "pm25", year = 2012)
-
-
 # Create function for annual geometric mean
