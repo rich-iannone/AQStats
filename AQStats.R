@@ -57,21 +57,7 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), pmatch("pm25", colnames(df)), 0)
   PM25.cols <- c(PM25.col, pm25.col)
   any.PM25.col <- sum(PM25.cols) > 0
-  
-  # Validate data input
-  #
-  # Are all of the time elements available?
-  # In which columns are the time elements provided
-  # How to account for different names?
-  # Is it possible to detect which columns contain what based on creating time objects and testing
-  # for fairly regular increments?
-  #
-  # Is there at least one PM data source identified?
-  
-  
-  # if(tsp == NULL & pm10 == NULL & pm25 == NULL,
-  #       break("At least one PM parameter must be identified in the data frame"), NULL)
-  
+    
   # Detect if there is a column of class "POSIXct"
   posix_time <- mat.or.vec(ncol(df),1)
   for (i in 1:(ncol(df))) {
