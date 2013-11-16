@@ -20,6 +20,10 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
   any.cols.defined <- ifelse(is.null(pm) & is.null(pm10) & is.null(pm25),
      FALSE, TRUE)
   
+  # Provide status of inputs
+  ifelse(any.cols.defined == FALSE,
+         print("No parameters were identified in the data frame."),
+         NULL)
   
   
   # If data frame is a vector, make it a data frame
