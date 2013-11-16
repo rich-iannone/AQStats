@@ -26,6 +26,10 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
 #  ratios = c(0.47, 0.072)
 #  percentiles = c(100, 99, 98, 95, 90, 75, 50)
   
+  # Determine whether any inputs for pm, pm10, or pm25 were provided
+  any.cols.defined <- ifelse(is.null(pm) & is.null(pm10) & is.null(pm25),
+     FALSE, TRUE)
+  
   
   
   # If data frame is a vector, make it a data frame
