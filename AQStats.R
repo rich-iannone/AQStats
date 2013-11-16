@@ -135,17 +135,6 @@ hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
   print(hourly_percentiles)
 }
 
-# try out the function for each year
-
-hourly.pm.stats(data = revised_dust_data,
-                tsp = "TSP", pm10 = "pm10", pm25 = "pm25", year = 2010)
-
-hourly.pm.stats(data = revised_dust_data,
-                tsp = "TSP", pm10 = "pm10", pm25 = "pm25", year = 2011)
-
-hourly.pm.stats(data = revised_dust_data,
-                tsp = "TSP", pm10 = "pm10", pm25 = "pm25", year = 2012)
-
 
 # Function for sequential, daily percentiles
 daily.seq.pm.stats <- function(df, tsp = NULL, pm10 = NULL, pm25 = NULL,
