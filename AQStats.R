@@ -15,6 +15,7 @@ pm10 <- test_data$TSP * 0.47
 pm25 <- test_data$TSP * 0.072
 test_data$pm10 <- pm10
 test_data$pm25 <- pm25
+df <- df[-1, ]
 
 # Function for hourly percentiles for particulate matter
 hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
