@@ -13,7 +13,7 @@ df <- df[-1, ]
 
 # Function for hourly percentiles for particulate matter
 hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
-                            estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
+                            estimate.pm = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
   
 #  year <- 2012
@@ -122,8 +122,8 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
 
 
 # Function for sequential, daily percentiles
-daily.seq.pm.stats <- function(df, tsp = NULL, pm10 = NULL, pm25 = NULL,
-                               estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
+daily.seq.pm.stats <- function(df, pm = NULL, pm10 = NULL, pm25 = NULL,
+                               estimate.pm = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                                year, percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
   #data <- dust_data_2010_2012
   #tsp <- "dust"  #character
