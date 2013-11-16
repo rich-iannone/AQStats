@@ -5,8 +5,7 @@ df$Date.Time <- parse_date_time(as.character(df$Date.Time), "%m%d%y %H%M")
 df$Date.Time <- as.POSIXct(df$Date.Time, tz = "America/Vancouver")
 
 
-
-# Rename rows to contain units
+# Rename rows to contain units; remove 1st row with unit labels
 for (i in 2:(ncol(df))) {
   colnames(df)[i] <- paste(colnames(df)[i],".",gsub(" ","",as.character(df[1,i])), sep = "")
 }
