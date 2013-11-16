@@ -12,7 +12,7 @@ for (i in 2:(ncol(df))) {
 df <- df[-1, ]
 
 # Function for hourly percentiles for particulate matter
-hourly.pm.stats <- function(df, year, tsp = NULL, pm10 = NULL, pm25 = NULL,
+hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
   
