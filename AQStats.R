@@ -9,12 +9,6 @@ df$Date.Time <- as.POSIXct(df$Date.Time, tz = "America/Vancouver")
 for (i in 2:(ncol(df))) {
   colnames(df)[i] <- paste(colnames(df)[i],".",gsub(" ","",as.character(df[1,i])), sep = "")
 }
-
-# Get estimates of the PM10 and PM2.5 ratios using the fractions of TSP: 0.47 and 0.072 
-pm10 <- test_data$TSP * 0.47
-pm25 <- test_data$TSP * 0.072
-test_data$pm10 <- pm10
-test_data$pm25 <- pm25
 df <- df[-1, ]
 
 # Function for hourly percentiles for particulate matter
