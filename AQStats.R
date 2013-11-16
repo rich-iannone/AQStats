@@ -16,15 +16,16 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.tsp = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
   
-  year <- 2012
-  df <- df
+#  year <- 2012
+#  df <- df
   
-  tsp = NULL
-  pm10 = "PM10.ug/m3"
-  pm25 = "PM25.ug/m3"
+#  pm = NULL
+#  pm10 = "PM10.ug/m3"
+#  pm25 = "PM25.ug/m3"
   
-  ratios = c(0.47, 0.072)
-  percentiles = c(100, 99, 98, 95, 90, 75, 50)
+#  ratios = c(0.47, 0.072)
+#  percentiles = c(100, 99, 98, 95, 90, 75, 50)
+  
   
   
   # If data frame is a vector, make it a data frame
