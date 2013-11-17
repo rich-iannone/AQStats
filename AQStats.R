@@ -64,7 +64,7 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
       # Create subset of data frame based on POSIX formatted objects and year selected 
     data_year <- df[which(year(df[,posix_col]) == year), ]
   } else if (!is.na(year_col)) {
-    data_year <- df[which(year(df[,year_col]) == year), ]
+    data_year <- df[which(as.numeric(df[,year_col]) == year), ]
   } else { stop("Year information cannot be found in data frame") }
     
   # Determine how large to make the empty data frame
