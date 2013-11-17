@@ -65,7 +65,7 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
     data_year <- df[which(year(df[,posix_col]) == year), ]
   } else if (!is.na(year_col)) {
     data_year <- df[which(year(df[,year_col]) == year), ]
-  } else { break("Year information cannot be found in data frame") }
+  } else { stop("Year information cannot be found in data frame") }
     
   # Determine how large to make the empty data frame
   number_of_percentiles <- length(percentiles)
