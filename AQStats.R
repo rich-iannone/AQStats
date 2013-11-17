@@ -44,7 +44,12 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
   pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), pmatch("pm25", colnames(df)), 0)
   PM25.cols <- c(PM25.col, pm25.col)
   any.PM25.col <- sum(PM25.cols) > 0
-    
+
+  # Determine whether PM data should be estimated
+  get.estimate.PM <- ifelse(any.PM.col == FALSE & estimate.pm == TRUE, TRUE, FALSE)
+  get.estimate.PM10 <- ifelse(any.PM10.col == FALSE & estimate.pm10 == TRUE, TRUE, FALSE)
+  get.estimate.PM25 <- ifelse(any.PM25.col == FALSE & estimate.pm25 == TRUE, TRUE, FALSE)
+  
   # Detect if there is a column of class "POSIXct"
   posix_time <- mat.or.vec(ncol(df),1)
   for (i in 1:(ncol(df))) {
