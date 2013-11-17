@@ -54,6 +54,14 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
   any.PM25.col <- sum(PM25.cols) > 0
   allNA.any.PM25.col <- ifelse(sapply(df[,PM25.cols], function(x)all(is.na(x))), TRUE, FALSE)
   
+  # Break function if no columns defined and if the PM data columns detected all contain NAs
+  if (any.cols.defined == FALSE &
+      allNA.any.PM.col == TRUE &
+      allNA.any.PM10.col == TRUE &
+      allNA.any.PM25.col == TRUE) {
+    break("No data available")
+    } else {NULL}
+  }
 
   # Determine whether PM data should be estimated
   get.estimate.PM <- ifelse(any.PM.col == FALSE & estimate.pm == TRUE, TRUE, FALSE)
