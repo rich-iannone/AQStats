@@ -11,6 +11,12 @@ for (i in 2:(ncol(df))) {
 }
 df <- df[-1, ]
 
+# Extract year from Date.Time column
+df$year <- year(df$Date.Time)
+
+# Remove Date.Time column
+df <- df[,-1]
+
 # Function for hourly percentiles for particulate matter
 hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.pm = TRUE, estimate.pm10 = TRUE, estimate.pm25 = TRUE,
