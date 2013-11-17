@@ -38,18 +38,22 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
   tsp.col <- ifelse(!is.na(pmatch("tsp", colnames(df))), pmatch("tsp", colnames(df)), 0)
   PM.cols <- c(PM.col, TSP.col, pm.col, tsp.col)
   any.PM.col <- sum(PM.cols) > 0
+  allNA.any.PM.col <- ifelse(sapply(df[,PM.cols], function(x)all(is.na(x))), TRUE, FALSE)
   
   # Test if data has a PM10 column
   PM10.col <- ifelse(!is.na(pmatch("PM10", colnames(df))), pmatch("PM10", colnames(df)), 0)
   pm10.col <- ifelse(!is.na(pmatch("pm10", colnames(df))), pmatch("pm10", colnames(df)), 0)
   PM10.cols <- c(PM10.col, pm10.col)
   any.PM10.col <- sum(PM10.cols) > 0
+  allNA.any.PM10.col <- ifelse(sapply(df[,PM10.cols], function(x)all(is.na(x))), TRUE, FALSE)
   
   # Test if data has a PM25 column
   PM25.col <- ifelse(!is.na(pmatch("PM25", colnames(df))), pmatch("PM25", colnames(df)), 0)
   pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), pmatch("pm25", colnames(df)), 0)
   PM25.cols <- c(PM25.col, pm25.col)
   any.PM25.col <- sum(PM25.cols) > 0
+  allNA.any.PM25.col <- ifelse(sapply(df[,PM25.cols], function(x)all(is.na(x))), TRUE, FALSE)
+  
 
   # Determine whether PM data should be estimated
   get.estimate.PM <- ifelse(any.PM.col == FALSE & estimate.pm == TRUE, TRUE, FALSE)
