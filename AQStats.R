@@ -139,6 +139,10 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
                                  (ratios[2]/ratios[1]) * hourly_percentiles$pm10,      
                                  NA))
   
+  # Remove NA columns from 'hourly_percentiles' data frame
+  hourly_percentiles <- hourly_percentiles[,colSums(is.na(hourly_percentiles)) <
+                        nrow(hourly_percentiles)]
+  
   # Print the hourly stats data frame
   print(hourly_percentiles)
 }
