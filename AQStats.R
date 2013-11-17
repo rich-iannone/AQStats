@@ -109,6 +109,30 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
   hourly_percentiles$pm10 <- round(pm10_percentiles, digits = 2)
   hourly_percentiles$pm25 <- round(pm25_percentiles, digits = 2)
   
+  
+  # Make estimates of percentiles when measurement data for either PM, PM10, or PM25 are missing
+  hourly_percentiles$pm.est <- ifelse(get.estimate.PM == TRUE &
+                               sum(hourly_percentiles$pm10) > 0,
+                               (1/ratios[1]) * hourly_percentiles$pm10,
+                               ifelse(get.estimate.PM == TRUE &
+                               sum(hourly_percentiles$pm25) > 0,
+                               (1/ratios[2]) * hourly_percentiles$pm25,      
+                               NA))
+  hourly_percentiles$pm10.est <- ifelse(get.estimate.PM10 == TRUE &
+                                 sum(hourly_percentiles$pm) > 0,
+                                 (ratios[1]) * hourly_percentiles$pm,
+                                 ifelse(get.estimate.PM10 == TRUE &
+                                 sum(hourly_percentiles$pm25) > 0,
+                                 (ratios[1]/ratios[2]) * hourly_percentiles$pm25,      
+                                 NA))
+  hourly_percentiles$pm25.est <- ifelse(get.estimate.PM25 == TRUE &
+                                 sum(hourly_percentiles$pm) > 0,
+                                 (ratios[2]) * hourly_percentiles$pm,
+                                 ifelse(get.estimate.PM25 == TRUE &
+                                 sum(hourly_percentiles$pm10) > 0,
+                                 (ratios[2]/ratios[1]) * hourly_percentiles$pm10,      
+                                 NA))
+  
   # Print the hourly stats data frame
   print(hourly_percentiles)
 }
