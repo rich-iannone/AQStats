@@ -143,6 +143,15 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
   hourly_percentiles <- hourly_percentiles[,colSums(is.na(hourly_percentiles)) <
                         nrow(hourly_percentiles)]
   
+  # Reorder columns by name
+  hourly_percentiles <- hourly_percentiles[c("year", "percentile", "type",
+                        ifelse("pm" %in% colnames(hourly_percentiles), "pm", 
+                          ifelse("pm.est" %in% colnames(hourly_percentiles),"pm.est", "")),
+                        ifelse("pm10" %in% colnames(hourly_percentiles), "pm10",
+                          ifelse("pm10.est" %in% colnames(hourly_percentiles),"pm10.est", "")),
+                        ifelse("pm25" %in% colnames(hourly_percentiles), "pm25",
+                          ifelse("pm25.est" %in% colnames(hourly_percentiles),"pm25.est", "")))]
+  
   # Print the hourly stats data frame
   print(hourly_percentiles)
 }
