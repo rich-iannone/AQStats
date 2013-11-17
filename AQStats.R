@@ -13,7 +13,7 @@ df <- df[-1, ]
 
 # Function for hourly percentiles for particulate matter
 hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
-                            estimate.pm = FALSE, estimate.pm10 = FALSE, estimate.pm25 = FALSE,
+                            estimate.pm = TRUE, estimate.pm10 = TRUE, estimate.pm25 = TRUE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
     
   # Determine whether any inputs for pm, pm10, or pm25 were provided
