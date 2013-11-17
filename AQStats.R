@@ -55,8 +55,8 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
   # Detect if there is a column that contains year data
   year_col <- mat.or.vec(ncol(df),1)
   for (i in 1:(ncol(df))) {
-    year_col[i] <- ifelse(mean(as.numeric(df[,3]), na.rm = TRUE) < (year(Sys.time()) + 1) &
-                          mean(as.numeric(df[,3]), na.rm = TRUE) > 1950, 1, NA)
+    year_col[i] <- ifelse(mean(as.numeric(df[,i]), na.rm = TRUE) <= (year(Sys.time()) + 1) &
+                          mean(as.numeric(df[,i]), na.rm = TRUE) > 1950, 1, NA)
   }
   year_col <- match(1, year_col)
   
