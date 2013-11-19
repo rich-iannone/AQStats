@@ -115,7 +115,9 @@ percentiles <- c(100, 99, 98, 95, 90, 75, 50)
     data_year <- df[which(as.numeric(df[,year_col]) == year), ]
   } else { stop("Year information cannot be found in data frame") }
     
-  # Determine how large to make the empty data frame
+
+
+  # Determine how large to make the empty data frame for the summary statistics
   number_of_percentiles <- length(percentiles)
   
   # Construct the data frame, provide column names
