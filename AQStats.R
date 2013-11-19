@@ -156,28 +156,45 @@ percentiles <- c(100, 99, 98, 95, 90, 75, 50)
   
   
   # Make estimates of percentiles when measurement data for either PM, PM10, or PM25 are missing
-  hourly_percentiles$pm.est <- ifelse(get.estimate.PM == TRUE &
-                               sum(hourly_percentiles$pm10) > 0,
-                               (1/ratios[1]) * hourly_percentiles$pm10,
-                               ifelse(get.estimate.PM == TRUE &
-                               sum(hourly_percentiles$pm25) > 0,
-                               (1/ratios[2]) * hourly_percentiles$pm25,      
-                               NA))
-  hourly_percentiles$pm10.est <- ifelse(get.estimate.PM10 == TRUE &
-                                 sum(hourly_percentiles$pm) > 0,
-                                 (ratios[1]) * hourly_percentiles$pm,
-                                 ifelse(get.estimate.PM10 == TRUE &
-                                 sum(hourly_percentiles$pm25) > 0,
-                                 (ratios[1]/ratios[2]) * hourly_percentiles$pm25,      
-                                 NA))
-  hourly_percentiles$pm25.est <- ifelse(get.estimate.PM25 == TRUE &
-                                 sum(hourly_percentiles$pm) > 0,
-                                 (ratios[2]) * hourly_percentiles$pm,
-                                 ifelse(get.estimate.PM25 == TRUE &
-                                 sum(hourly_percentiles$pm10) > 0,
-                                 (ratios[2]/ratios[1]) * hourly_percentiles$pm10,      
-                                 NA))
-  
+  pm.est <- mat.or.vec(nrow(hourly_percentiles),1)
+  for (i in 1:(nrow(hourly_percentiles))) {
+    pm.est[i] <- ifelse(get.estimate.PM == TRUE &
+                        sum(hourly_percentiles$pm10) > 0,
+                        round((1/ratios[1]) * hourly_percentiles$pm10[i], digits = 2),
+                            ifelse(get.estimate.PM == TRUE &
+                                   sum(hourly_percentiles$pm25) > 0,
+                                   round((1/ratios[2]) * hourly_percentiles$pm25[i], digits = 2),      
+                                   NA))
+  }
+  hourly_percentiles$pm.est <- pm.est
+
+  pm10.est <- mat.or.vec(nrow(hourly_percentiles),1)
+  for (i in 1:(nrow(hourly_percentiles))) {
+    pm10.est[i] <- ifelse(get.estimate.PM10 == TRUE &
+                          sum(hourly_percentiles$pm) > 0,
+                          round((ratios[1]) * hourly_percentiles$pm[i], digits = 2),
+                              ifelse(get.estimate.PM10 == TRUE &
+                                     sum(hourly_percentiles$pm25) > 0,
+                                     round((ratios[1]/ratios[2]) * hourly_percentiles$pm25[i],
+                                           digits = 2),
+                                     NA))
+  }
+  hourly_percentiles$pm10.est <- pm10.est
+
+
+  pm25.est <- mat.or.vec(nrow(hourly_percentiles),1)
+  for (i in 1:(nrow(hourly_percentiles))) {
+  pm25.est[i] <- ifelse(get.estimate.PM25 == TRUE &
+                        sum(hourly_percentiles$pm) > 0,
+                        round((ratios[2]) * hourly_percentiles$pm[i], digits = 2),
+                            ifelse(get.estimate.PM25 == TRUE &
+                                   sum(hourly_percentiles$pm10) > 0,
+                                   round((ratios[2]/ratios[1]) * hourly_percentiles$pm10[i],
+                                         digits = 2),
+                                   NA))
+  }
+  hourly_percentiles$pm25.est <- pm25.est
+
   # Remove NA columns from 'hourly_percentiles' data frame
   hourly_percentiles <- hourly_percentiles[,colSums(is.na(hourly_percentiles)) <
                         nrow(hourly_percentiles)]
