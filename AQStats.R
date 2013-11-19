@@ -10,6 +10,7 @@ for (i in 2:(ncol(df))) {
   colnames(df)[i] <- paste(colnames(df)[i],".",gsub(" ","",as.character(df[1,i])), sep = "")
 }
 df <- df[-1, ]
+rm(i)
 
 # Extract year from Date.Time column
 df$year <- year(df$Date.Time)
