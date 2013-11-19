@@ -21,7 +21,19 @@ df <- df[,-1]
 hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
                             estimate.pm = TRUE, estimate.pm10 = TRUE, estimate.pm25 = TRUE,
                             ratios = c(0.47, 0.072), percentiles = c(100, 99, 98, 95, 90, 75, 50)) {
-    
+
+# Test data
+year <- 2012
+pm <- NULL
+pm10 <- NULL
+pm25 <- NULL
+estimate.pm <- TRUE
+estimate.pm10 <- TRUE
+estimate.pm25 <- TRUE
+ratios <- c(0.47, 0.072)
+percentiles <- c(100, 99, 98, 95, 90, 75, 50)
+  
+  
   # Determine whether any inputs for pm, pm10, or pm25 were provided
   any.cols.defined <- ifelse(is.null(pm) & is.null(pm10) & is.null(pm25),
      FALSE, TRUE)
