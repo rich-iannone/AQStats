@@ -199,6 +199,17 @@ hourly.pm.stats <- function(df, year, pm = NULL, pm10 = NULL, pm25 = NULL,
   hourly_percentiles <- hourly_percentiles[,colSums(is.na(hourly_percentiles)) <
                         nrow(hourly_percentiles)]
   
+  # Break function if there are no PM, PM10, or PM25 columns
+  if ("pm" %in% colnames(hourly_percentiles) == FALSE &
+      "pm.est" %in% colnames(hourly_percentiles) == FALSE &
+      "pm10" %in% colnames(hourly_percentiles) == FALSE &
+      "pm10.est" %in% colnames(hourly_percentiles) == FALSE &
+      "pm25" %in% colnames(hourly_percentiles) == FALSE &
+      "pm25.est" %in% colnames(hourly_percentiles) == FALSE ){
+    stop("No data available for evaluation")
+  } else { NULL }
+  
+  
   # Reorder columns by name
   hourly_percentiles <- hourly_percentiles[c("year", "percentile", "type",
                         ifelse("pm" %in% colnames(hourly_percentiles), "pm", 
