@@ -48,23 +48,37 @@ percentiles <- c(100, 99, 98, 95, 90, 75, 50)
   TSP.col <- ifelse(!is.na(pmatch("TSP", colnames(df))), pmatch("TSP", colnames(df)), 0)
   pm.col <- ifelse(!is.na(pmatch("pm", colnames(df))), pmatch("pm", colnames(df)), 0)
   tsp.col <- ifelse(!is.na(pmatch("tsp", colnames(df))), pmatch("tsp", colnames(df)), 0)
-  PM.cols <- c(PM.col, TSP.col, pm.col, tsp.col)
-  any.PM.col <- sum(PM.cols) > 0
-  allNA.any.PM.col <- ifelse(sapply(df[,PM.cols], function(x)all(is.na(x))), TRUE, FALSE)
+  PM.cols <- sum(c(PM.col, TSP.col, pm.col, tsp.col))
+  any.PM.col <- PM.cols > 0 
+  allNA.any.PM.col <- if (any.PM.col == TRUE & all(is.na(PM.cols)) == TRUE ) {
+                      TRUE
+                      } else if (any.PM.col == TRUE & all(is.na(PM.cols)) == FALSE) {
+                      FALSE
+                      } else {TRUE}
+
   
   # Test if data has a PM10 column
   PM10.col <- ifelse(!is.na(pmatch("PM10", colnames(df))), pmatch("PM10", colnames(df)), 0)
   pm10.col <- ifelse(!is.na(pmatch("pm10", colnames(df))), pmatch("pm10", colnames(df)), 0)
-  PM10.cols <- c(PM10.col, pm10.col)
-  any.PM10.col <- sum(PM10.cols) > 0
-  allNA.any.PM10.col <- ifelse(sapply(df[,PM10.cols], function(x)all(is.na(x))), TRUE, FALSE)
-  
+  PM10.cols <- sum(c(PM10.col, pm10.col))
+  any.PM10.col <- PM10.cols > 0
+  allNA.any.PM10.col <- if (any.PM10.col == TRUE & all(is.na(PM10.cols)) == TRUE ) {
+                        TRUE
+                        } else if (any.PM10.col == TRUE & all(is.na(PM10.cols)) == FALSE) {
+                        FALSE
+                        } else {TRUE}
+
+
   # Test if data has a PM25 column
   PM25.col <- ifelse(!is.na(pmatch("PM25", colnames(df))), pmatch("PM25", colnames(df)), 0)
   pm25.col <- ifelse(!is.na(pmatch("pm25", colnames(df))), pmatch("pm25", colnames(df)), 0)
-  PM25.cols <- c(PM25.col, pm25.col)
-  any.PM25.col <- sum(PM25.cols) > 0
-  allNA.any.PM25.col <- ifelse(sapply(df[,PM25.cols], function(x)all(is.na(x))), TRUE, FALSE)
+  PM25.cols <- sum(c(PM25.col, pm25.col))
+  any.PM25.col <- PM25.cols > 0
+  allNA.any.PM25.col <- if (any.PM25.col == TRUE & all(is.na(PM25.cols)) == TRUE ) {
+                        TRUE
+                        } else if (any.PM25.col == TRUE & all(is.na(PM25.cols)) == FALSE) {
+                        FALSE
+                        } else {TRUE}
   
   # Break function if no columns defined and if the PM data columns detected all contain NAs
   if (any.cols.defined == FALSE &
@@ -73,7 +87,6 @@ percentiles <- c(100, 99, 98, 95, 90, 75, 50)
       allNA.any.PM25.col == TRUE) {
     break("No data available")
     } else {NULL}
-  }
 
   # Determine whether PM data should be estimated
   get.estimate.PM <- ifelse(any.PM.col == FALSE & estimate.pm == TRUE, TRUE, FALSE)
